@@ -9,6 +9,7 @@ namespace Algorithms.Sort
 			SortInPlace(list, Comparer<T>.Default);
 		}
 
+		// Ch 2.1, p.18
 		public static void SortInPlace<T>(IList<T> list, IComparer<T> comparer)
 		{
 			if (list.Count < 2)
