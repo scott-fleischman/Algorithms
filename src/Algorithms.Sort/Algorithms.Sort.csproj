@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DigitAddition.cs" />
     <Compile Include="InsertionSort.cs" />
     <Compile Include="LinearSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

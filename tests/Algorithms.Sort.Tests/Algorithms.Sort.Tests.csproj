@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DigitAdditionTests.cs" />
     <Compile Include="InsertionSortTests.cs" />
     <Compile Include="LinearSearchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
