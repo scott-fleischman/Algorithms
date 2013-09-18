@@ -27,6 +27,11 @@ namespace Algorithms.Sort.Tests
 			get { return m_expectedOrder; }
 		}
 
+		public override string ToString()
+		{
+			return string.Format("[{0}]", string.Join(", ", m_items.Select(x => x.ToString())));
+		}
+
 		readonly ReadOnlyCollection<T> m_items;
 		readonly ReadOnlyCollection<T> m_expectedOrder;
 	}

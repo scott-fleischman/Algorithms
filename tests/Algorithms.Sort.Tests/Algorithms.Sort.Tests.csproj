@@ -41,6 +41,7 @@
     <Compile Include="InsertionSortTests.cs" />
     <Compile Include="LinearSearchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectionSortTests.cs" />
     <Compile Include="SortTestCase.cs" />
     <Compile Include="SortTestCases.cs" />
   </ItemGroup>
