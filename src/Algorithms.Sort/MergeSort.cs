@@ -8,10 +8,10 @@ namespace Algorithms.Sort
 		// 2.3.1, pp. 31-34
 		public void SortInPlace<T>(IList<T> items, IComparer<T> comparer)
 		{
-			MergeSortInPlace(items, 0, items.Count - 1, new ItemSentinelComparer<T>(comparer));
+			MergeSortInPlace(items, 0, items.Count - 1, comparer);
 		}
 
-		private void MergeSortInPlace<T>(IList<T> items, int left, int right, ItemSentinelComparer<T> comparer)
+		private void MergeSortInPlace<T>(IList<T> items, int left, int right, IComparer<T> comparer)
 		{
 			if (left < right)
 			{
@@ -22,91 +22,54 @@ namespace Algorithms.Sort
 			}
 		}
 
-		private void Merge<T>(IList<T> items, int leftEnd, int middle, int rightEnd, ItemSentinelComparer<T> comparer)
+		private void Merge<T>(IList<T> items, int leftEnd, int middle, int rightEnd, IComparer<T> comparer)
 		{
-			int leftSize = middle - leftEnd + 1;
-			int rightSize = rightEnd - middle;
+			T[] leftItems = Slice(items, leftEnd, middle);
+			T[] rightItems = Slice(items, middle + 1, rightEnd);
 
-			var leftItems = new ItemSentinel<T>[leftSize + 1];
-			var rightItems = new ItemSentinel<T>[rightSize + 1];
-			int left;
-			int right;
-			for (left = 0; left < leftSize; left++)
-				leftItems[left] = new ItemSentinel<T>(items[leftEnd + left]);
-			for (right = 0; right < rightSize; right++)
-				rightItems[right] = new ItemSentinel<T>(items[middle + right + 1]);
-
-			leftItems[leftSize] = new ItemSentinel<T>();
-			rightItems[rightSize] = new ItemSentinel<T>();
-
-			left = 0;
-			right = 0;
-			for (int current = leftEnd; current <= rightEnd; current++)
+			int index = leftEnd;
+			int left = 0;
+			int right = 0;
+			while (index <= rightEnd && left < leftItems.Length && right < rightItems.Length)
 			{
 				if (comparer.Compare(leftItems[left], rightItems[right]) <= 0)
 				{
-					items[current] = leftItems[left].Item;
+					items[index] = leftItems[left];
 					left++;
 				}
 				else
 				{
-					items[current] = rightItems[right].Item;
+					items[index] = rightItems[right];
 					right++;
 				}
+
+				index++;
 			}
+
+			while (index <= rightEnd && left < leftItems.Length)
+			{
+				items[index] = leftItems[left];
+				left++;
+				index++;
+			}
+
+			while (index <= rightEnd && right < rightItems.Length)
+			{
+				items[index] = rightItems[right];
+				right++;
+				index++;
+			}
+
+			if (index <= rightEnd)
+				throw new InvalidOperationException("Did not insert all elements into result");
 		}
 
-		private class ItemSentinelComparer<T> : IComparer<ItemSentinel<T>>
+		private static T[] Slice<T>(IList<T> items, int start, int end)
 		{
-			public ItemSentinelComparer(IComparer<T> comparer)
-			{
-				m_comparer = comparer;
-			}
-
-			public int Compare(ItemSentinel<T> x, ItemSentinel<T> y)
-			{
-				if (x.IsSentinel && !y.IsSentinel)
-					return 1;
-				if (!x.IsSentinel && y.IsSentinel)
-					return -1;
-				if (x.IsSentinel && y.IsSentinel)
-					return 0;
-				return m_comparer.Compare(x.Item, y.Item);
-			}
-
-			readonly IComparer<T> m_comparer;
-		}
-
-		private class ItemSentinel<T>
-		{
-			public ItemSentinel()
-			{
-				m_isSentinel = true;
-			}
-
-			public ItemSentinel(T item)
-			{
-				m_item = item;
-			}
-
-			public bool IsSentinel
-			{
-				get { return m_isSentinel; }
-			}
-
-			public T Item
-			{
-				get
-				{
-					if (m_isSentinel)
-						throw new InvalidOperationException("Must not get Item for a sentinel value");
-
-					return m_item;
-				}
-			}
-
-			readonly bool m_isSentinel;
-			readonly T m_item;
+			var slice = new T[end - start + 1];
+			for (int index = 0; index < slice.Length; index++)
+				slice[index] = items[start + index];
+			return slice;
 		}
 	}
 }
