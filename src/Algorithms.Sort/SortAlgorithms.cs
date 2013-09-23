@@ -19,12 +19,18 @@ namespace Algorithms.Sort
 			get { return s_insertionSort; }
 		}
 
+		public static MergeSort MergeSort
+		{
+			get { return s_mergeSort; }
+		}
+
 		public static SelectionSort SelectionSort
 		{
 			get { return s_selectionSort; }
 		}
 
 		static readonly InsertionSort s_insertionSort = new InsertionSort();
+		static readonly MergeSort s_mergeSort = new MergeSort();
 		static readonly SelectionSort s_selectionSort = new SelectionSort();
 	}
 }

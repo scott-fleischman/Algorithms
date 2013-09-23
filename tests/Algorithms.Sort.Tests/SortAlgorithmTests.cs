@@ -21,6 +21,7 @@ namespace Algorithms.Sort.Tests
 			return new ISortInPlace[]
 				{
 					SortAlgorithms.InsertionSort,
+					SortAlgorithms.MergeSort,
 					SortAlgorithms.SelectionSort,
 				};
 		}
