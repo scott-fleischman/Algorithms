@@ -2,15 +2,10 @@
 
 namespace Algorithms.Sort
 {
-	public static class InsertionSort
+	public sealed class InsertionSort : ISortInPlace
 	{
-		public static void SortInPlace<T>(IList<T> list)
-		{
-			SortInPlace(list, Comparer<T>.Default);
-		}
-
 		// Ch 2.1, p.18
-		public static void SortInPlace<T>(IList<T> list, IComparer<T> comparer)
+		public void SortInPlace<T>(IList<T> list, IComparer<T> comparer)
 		{
 			if (list.Count < 2)
 				return;
