@@ -5,6 +5,7 @@ namespace Algorithms.Sort
 {
 	public static class DigitAddition
 	{
+		// Sequences start with least significant digits
 		public static IEnumerable<int> Add(IEnumerable<int> leftDigits, IEnumerable<int> rightDigits, int radix = 2)
 		{
 			using (var leftEnumerator = leftDigits.GetEnumerator())
