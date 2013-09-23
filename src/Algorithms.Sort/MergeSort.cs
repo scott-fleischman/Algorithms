@@ -22,17 +22,17 @@ namespace Algorithms.Sort
 			}
 		}
 
-		private void Merge<T>(IList<T> items, int leftStart, int middle, int rightStart, ItemSentinelComparer<T> comparer)
+		private void Merge<T>(IList<T> items, int leftEnd, int middle, int rightEnd, ItemSentinelComparer<T> comparer)
 		{
-			int leftSize = middle - leftStart + 1;
-			int rightSize = rightStart - middle;
+			int leftSize = middle - leftEnd + 1;
+			int rightSize = rightEnd - middle;
 
 			var leftItems = new ItemSentinel<T>[leftSize + 1];
 			var rightItems = new ItemSentinel<T>[rightSize + 1];
 			int left;
 			int right;
 			for (left = 0; left < leftSize; left++)
-				leftItems[left] = new ItemSentinel<T>(items[leftStart + left]);
+				leftItems[left] = new ItemSentinel<T>(items[leftEnd + left]);
 			for (right = 0; right < rightSize; right++)
 				rightItems[right] = new ItemSentinel<T>(items[middle + right + 1]);
 
@@ -41,7 +41,7 @@ namespace Algorithms.Sort
 
 			left = 0;
 			right = 0;
-			for (int current = leftStart; current <= rightStart; current++)
+			for (int current = leftEnd; current <= rightEnd; current++)
 			{
 				if (comparer.Compare(leftItems[left], rightItems[right]) <= 0)
 				{
