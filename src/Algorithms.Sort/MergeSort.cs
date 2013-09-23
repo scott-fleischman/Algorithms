@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Algorithms.Sort
 {
@@ -27,12 +26,15 @@ namespace Algorithms.Sort
 			T[] leftItems = Slice(items, leftEnd, middle);
 			T[] rightItems = Slice(items, middle + 1, rightEnd);
 
-			int index = leftEnd;
 			int left = 0;
 			int right = 0;
-			while (index <= rightEnd && left < leftItems.Length && right < rightItems.Length)
+			for (int index = leftEnd; index <= rightEnd; index++)
 			{
-				if (comparer.Compare(leftItems[left], rightItems[right]) <= 0)
+				bool getFromLeft = left < leftItems.Length &&
+					((right < rightItems.Length && comparer.Compare(leftItems[left], rightItems[right]) <= 0) ||
+					right >= rightItems.Length);
+
+				if (getFromLeft)
 				{
 					items[index] = leftItems[left];
 					left++;
@@ -42,26 +44,7 @@ namespace Algorithms.Sort
 					items[index] = rightItems[right];
 					right++;
 				}
-
-				index++;
 			}
-
-			while (index <= rightEnd && left < leftItems.Length)
-			{
-				items[index] = leftItems[left];
-				left++;
-				index++;
-			}
-
-			while (index <= rightEnd && right < rightItems.Length)
-			{
-				items[index] = rightItems[right];
-				right++;
-				index++;
-			}
-
-			if (index <= rightEnd)
-				throw new InvalidOperationException("Did not insert all elements into result");
 		}
 
 		private static T[] Slice<T>(IList<T> items, int start, int end)
