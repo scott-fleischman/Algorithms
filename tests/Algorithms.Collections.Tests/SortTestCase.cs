@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Algorithms.Sort.Tests
+namespace Algorithms.Collections.Tests
 {
 	public class SortTestCase<T>
 	{

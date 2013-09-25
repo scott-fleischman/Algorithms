@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Algorithms.Sort.Tests
+namespace Algorithms.Collections.Tests
 {
 	public class SortTestCases
 	{

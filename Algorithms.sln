@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms.Sort", "src\Algorithms.Sort\Algorithms.Sort.csproj", "{5D3C6AFD-0970-4A1A-9D2C-9E8E65A3B8AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms.Collections", "src\Algorithms.Collections\Algorithms.Collections.csproj", "{5D3C6AFD-0970-4A1A-9D2C-9E8E65A3B8AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms.Sort.Tests", "tests\Algorithms.Sort.Tests\Algorithms.Sort.Tests.csproj", "{930A6680-042C-4366-AA12-7751BB153DF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms.Collections.Tests", "tests\Algorithms.Collections.Tests\Algorithms.Collections.Tests.csproj", "{930A6680-042C-4366-AA12-7751BB153DF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

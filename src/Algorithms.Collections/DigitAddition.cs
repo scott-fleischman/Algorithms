@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algorithms.Sort
+namespace Algorithms.Collections
 {
 	public static class DigitAddition
 	{

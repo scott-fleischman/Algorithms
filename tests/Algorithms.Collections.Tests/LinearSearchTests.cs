@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Algorithms.Sort.Tests
+namespace Algorithms.Collections.Tests
 {
 	[TestFixture]
 	public class LinearSearchTests
