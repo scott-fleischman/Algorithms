@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DigitAddition.cs" />
+    <Compile Include="IOrderByAlgorithm.cs" />
     <Compile Include="ISortInPlace.cs" />
     <Compile Include="InsertionSort.cs" />
     <Compile Include="LinearSearch.cs" />

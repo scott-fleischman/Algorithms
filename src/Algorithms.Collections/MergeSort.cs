@@ -1,13 +1,55 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithms.Collections
 {
-	public class MergeSort : ISortInPlace
+	public class MergeSort : ISortInPlace, IOrderByAlgorithm
 	{
 		// 2.3.1, pp. 31-34
 		public void SortInPlace<T>(IList<T> items, IComparer<T> comparer)
 		{
 			MergeSortInPlace(items, 0, items.Count - 1, comparer);
+		}
+
+		public IEnumerable<T> OrderByAlgorithm<T>(IEnumerable<T> items, IComparer<T> comparer)
+		{
+			int count = items.Count();
+			if (count <= 1)
+				return items;
+
+			int leftCount = count / 2;
+			return Merge(
+				OrderByAlgorithm(items.Take(leftCount), comparer),
+				OrderByAlgorithm(items.Skip(leftCount), comparer),
+				comparer);
+		}
+
+		private IEnumerable<T> Merge<T>(IEnumerable<T> left, IEnumerable<T> right, IComparer<T> comparer)
+		{
+			using (IEnumerator<T> leftState = left.GetEnumerator())
+			using (IEnumerator<T> rightState = right.GetEnumerator())
+			{
+				bool hasLeft = leftState.MoveNext();
+				bool hasRight = rightState.MoveNext();
+
+				while (hasLeft || hasRight)
+				{
+					bool getFromLeft = hasLeft &&
+						((hasRight && comparer.Compare(leftState.Current, rightState.Current) <= 0) ||
+						!hasRight);
+
+					if (getFromLeft)
+					{
+						yield return leftState.Current;
+						hasLeft = leftState.MoveNext();
+					}
+					else
+					{
+						yield return rightState.Current;
+						hasRight = rightState.MoveNext();
+					}
+				}
+			}
 		}
 
 		private void MergeSortInPlace<T>(IList<T> items, int left, int right, IComparer<T> comparer)

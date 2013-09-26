@@ -14,6 +14,16 @@ namespace Algorithms.Collections
 			algorithm.SortInPlace(source, comparer);
 		}
 
+		public static IEnumerable<T> OrderByAlgorithm<T>(this IEnumerable<T> source, IOrderByAlgorithm algorithm)
+		{
+			return OrderByAlgorithm(source, Comparer<T>.Default, algorithm);
+		}
+
+		public static IEnumerable<T> OrderByAlgorithm<T>(this IEnumerable<T> source, IComparer<T> comparer, IOrderByAlgorithm algorithm)
+		{
+			return algorithm.OrderByAlgorithm(source, comparer);
+		}
+
 		public static InsertionSort InsertionSort
 		{
 			get { return s_insertionSort; }
