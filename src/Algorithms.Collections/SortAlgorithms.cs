@@ -4,14 +4,14 @@ namespace Algorithms.Collections
 {
 	public static class SortAlgorithms
 	{
-		public static void SortByAlgorithm<T>(this IList<T> source, ISortInPlace algorithm)
+		public static void SortByAlgorithm<T>(this IList<T> source, IListSortAlgorithm algorithm)
 		{
 			SortByAlgorithm(source, Comparer<T>.Default, algorithm);
 		}
 
-		public static void SortByAlgorithm<T>(this IList<T> source, IComparer<T> comparer, ISortInPlace algorithm)
+		public static void SortByAlgorithm<T>(this IList<T> source, IComparer<T> comparer, IListSortAlgorithm algorithm)
 		{
-			algorithm.SortInPlace(source, comparer);
+			algorithm.SortByAlgorithm(source, comparer);
 		}
 
 		public static IEnumerable<T> OrderByAlgorithm<T>(this IEnumerable<T> source, IOrderByAlgorithm algorithm)

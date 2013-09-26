@@ -2,10 +2,10 @@
 
 namespace Algorithms.Collections
 {
-	public sealed class InsertionSort : ISortInPlace
+	public sealed class InsertionSort : IListSortAlgorithm
 	{
 		// Ch 2.1, p.18
-		public void SortInPlace<T>(IList<T> list, IComparer<T> comparer)
+		public void SortByAlgorithm<T>(IList<T> list, IComparer<T> comparer)
 		{
 			if (list.Count < 2)
 				return;

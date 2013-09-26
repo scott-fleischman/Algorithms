@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace Algorithms.Collections
 {
-	public class MergeSort : ISortInPlace, IOrderByAlgorithm
+	public class MergeSort : IListSortAlgorithm, IOrderByAlgorithm
 	{
 		// 2.3.1, pp. 31-34
-		public void SortInPlace<T>(IList<T> items, IComparer<T> comparer)
+		public void SortByAlgorithm<T>(IList<T> items, IComparer<T> comparer)
 		{
 			MergeSortInPlace(items, 0, items.Count - 1, comparer);
 		}

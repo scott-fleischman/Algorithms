@@ -9,7 +9,7 @@ namespace Algorithms.Collections.Tests
 	{
 		[Test]
 		public void SortInPlaceInteger(
-			[ValueSource("GetSortAlgorithms")] ISortInPlace algorithm,
+			[ValueSource("GetSortAlgorithms")] IListSortAlgorithm algorithm,
 			[ValueSource(typeof(SortTestCases), "Integer")] SortTestCase<int> testCase)
 		{
 			var list = new List<int>(testCase.Items);
@@ -27,9 +27,9 @@ namespace Algorithms.Collections.Tests
 				Is.EqualTo(testCase.ExpectedOrder));
 		}
 
-		private static IEnumerable<ISortInPlace> GetSortAlgorithms()
+		private static IEnumerable<IListSortAlgorithm> GetSortAlgorithms()
 		{
-			return new ISortInPlace[]
+			return new IListSortAlgorithm[]
 				{
 					SortAlgorithms.InsertionSort,
 					SortAlgorithms.MergeSort,
