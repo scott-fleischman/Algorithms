@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Algorithms.Collections
 {
-	public sealed class SelectionSort : IListSortAlgorithm
+	public static class SelectionSort
 	{
 		// Ex 2.2-2, p. 29
-		public void SortByAlgorithm<T>(IList<T> list, IComparer<T> comparer)
+		public static void Sort<T>(IList<T> list, IComparer<T> comparer)
 		{
 			if (list.Count <= 1)
 				return;

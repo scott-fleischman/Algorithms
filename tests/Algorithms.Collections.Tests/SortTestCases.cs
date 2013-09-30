@@ -4,7 +4,7 @@ namespace Algorithms.Collections.Tests
 {
 	public class SortTestCases
 	{
-		public static IEnumerable<SortTestCase<int>> Integer
+		public static IEnumerable<SortTestCase<int>> Int32
 		{
 			get
 			{

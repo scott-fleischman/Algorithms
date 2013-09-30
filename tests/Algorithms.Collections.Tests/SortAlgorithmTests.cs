@@ -8,40 +8,51 @@ namespace Algorithms.Collections.Tests
 	public class SortAlgorithmTests
 	{
 		[Test]
-		public void SortInPlaceInteger(
-			[ValueSource("GetSortAlgorithms")] IListSortAlgorithm algorithm,
-			[ValueSource(typeof(SortTestCases), "Integer")] SortTestCase<int> testCase)
+		public void SortAlgorithmInt32(
+			[ValueSource("GetInt32SortAlgorithms")] NamedSortAlgorithm<int> namedSortAlgorithm,
+			[ValueSource(typeof(SortTestCases), "Int32")] SortTestCase<int> testCase)
 		{
 			var list = new List<int>(testCase.Items);
-			list.SortByAlgorithm(algorithm);
+			list.SortByAlgorithm(namedSortAlgorithm.Algorithm);
 			Assert.That(list, Is.EqualTo(testCase.ExpectedOrder));
 		}
 
 		[Test]
-		public void OrderByAlgorithmInteger(
-			[ValueSource("GetOrderByAlgorithms")] IOrderByAlgorithm algorithm,
-			[ValueSource(typeof(SortTestCases), "Integer")] SortTestCase<int> testCase)
+		public void OrderByAlgorithmInt32(
+			[ValueSource("GetInt32OrderByAlgorithms")] NamedOrderByAlgorithm<int> namedOrderByAlgorithm,
+			[ValueSource(typeof(SortTestCases), "Int32")] SortTestCase<int> testCase)
 		{
 			Assert.That(
-				testCase.Items.OrderByAlgorithm(algorithm).ToList(),
+				testCase.Items.OrderByAlgorithm(namedOrderByAlgorithm.Algorithm).ToList(),
 				Is.EqualTo(testCase.ExpectedOrder));
 		}
 
-		private static IEnumerable<IListSortAlgorithm> GetSortAlgorithms()
+		private static IEnumerable<NamedSortAlgorithm<int>> GetInt32SortAlgorithms()
 		{
-			return new IListSortAlgorithm[]
+			return GetGenericSortAlgorithms<int>();
+		}
+
+		private static IEnumerable<NamedOrderByAlgorithm<int>> GetInt32OrderByAlgorithms()
+		{
+			return GetGenericOrderByAlgorithms<int>();
+		}
+
+		private static IEnumerable<NamedSortAlgorithm<T>> GetGenericSortAlgorithms<T>()
+		{
+			return new[]
 				{
-					SortAlgorithms.InsertionSort,
-					SortAlgorithms.MergeSort,
-					SortAlgorithms.SelectionSort,
+					new NamedSortAlgorithm<T>("InsertionSort.Sort", InsertionSort.Sort),
+					new NamedSortAlgorithm<T>("InsertionSort.SortRecursive", InsertionSort.SortRecursive),
+					new NamedSortAlgorithm<T>("MergeSort.Sort", MergeSort.Sort),
+					new NamedSortAlgorithm<T>("SelectionSort.Sort", SelectionSort.Sort),
 				};
 		}
 
-		private static IEnumerable<IOrderByAlgorithm> GetOrderByAlgorithms()
+		private static IEnumerable<NamedOrderByAlgorithm<T>> GetGenericOrderByAlgorithms<T>()
 		{
-			return new IOrderByAlgorithm[]
+			return new[]
 				{
-					SortAlgorithms.MergeSort,
+					new NamedOrderByAlgorithm<T>("MergeSort.OrderBy", MergeSort.OrderBy),
 				};
 		}
 	}

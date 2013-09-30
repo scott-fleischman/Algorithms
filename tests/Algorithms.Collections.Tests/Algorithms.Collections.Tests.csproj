@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="DigitAdditionTests.cs" />
     <Compile Include="LinearSearchTests.cs" />
+    <Compile Include="NamedOrderByAlgorithm.cs" />
+    <Compile Include="NamedSortAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortAlgorithmTests.cs" />
     <Compile Include="SortTestCase.cs" />

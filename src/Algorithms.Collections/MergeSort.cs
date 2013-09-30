@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace Algorithms.Collections
 {
-	public class MergeSort : IListSortAlgorithm, IOrderByAlgorithm
+	public static class MergeSort
 	{
 		// 2.3.1, pp. 31-34
-		public void SortByAlgorithm<T>(IList<T> items, IComparer<T> comparer)
+		public static void Sort<T>(IList<T> items, IComparer<T> comparer)
 		{
 			MergeSortInPlace(items, 0, items.Count - 1, comparer);
 		}
 
-		public IEnumerable<T> OrderByAlgorithm<T>(IEnumerable<T> items, IComparer<T> comparer)
+		public static IEnumerable<T> OrderBy<T>(IEnumerable<T> items, IComparer<T> comparer)
 		{
 			int count = items.Count();
 			if (count <= 1)
@@ -19,12 +19,12 @@ namespace Algorithms.Collections
 
 			int leftCount = count / 2;
 			return Merge(
-				OrderByAlgorithm(items.Take(leftCount), comparer),
-				OrderByAlgorithm(items.Skip(leftCount), comparer),
+				OrderBy(items.Take(leftCount), comparer),
+				OrderBy(items.Skip(leftCount), comparer),
 				comparer);
 		}
 
-		private IEnumerable<T> Merge<T>(IEnumerable<T> left, IEnumerable<T> right, IComparer<T> comparer)
+		private static IEnumerable<T> Merge<T>(IEnumerable<T> left, IEnumerable<T> right, IComparer<T> comparer)
 		{
 			using (IEnumerator<T> leftState = left.GetEnumerator())
 			using (IEnumerator<T> rightState = right.GetEnumerator())
@@ -52,7 +52,7 @@ namespace Algorithms.Collections
 			}
 		}
 
-		private void MergeSortInPlace<T>(IList<T> items, int left, int right, IComparer<T> comparer)
+		private static void MergeSortInPlace<T>(IList<T> items, int left, int right, IComparer<T> comparer)
 		{
 			if (left < right)
 			{
@@ -63,7 +63,7 @@ namespace Algorithms.Collections
 			}
 		}
 
-		private void Merge<T>(IList<T> items, int leftEnd, int middle, int rightEnd, IComparer<T> comparer)
+		private static void Merge<T>(IList<T> items, int leftEnd, int middle, int rightEnd, IComparer<T> comparer)
 		{
 			T[] leftItems = Slice(items, leftEnd, middle);
 			T[] rightItems = Slice(items, middle + 1, rightEnd);
