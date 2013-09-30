@@ -8,7 +8,7 @@ namespace Algorithms.Collections
 		// 2.3.1, pp. 31-34
 		public static void Sort<T>(IList<T> items, IComparer<T> comparer)
 		{
-			MergeSortInPlace(items, 0, items.Count - 1, comparer);
+			Sort(items, 0, items.Count - 1, comparer);
 		}
 
 		public static IEnumerable<T> OrderBy<T>(IEnumerable<T> items, IComparer<T> comparer)
@@ -52,13 +52,13 @@ namespace Algorithms.Collections
 			}
 		}
 
-		private static void MergeSortInPlace<T>(IList<T> items, int left, int right, IComparer<T> comparer)
+		private static void Sort<T>(IList<T> items, int left, int right, IComparer<T> comparer)
 		{
 			if (left < right)
 			{
 				int middle = (left + right) / 2;
-				MergeSortInPlace(items, left, middle, comparer);
-				MergeSortInPlace(items, middle + 1, right, comparer);
+				Sort(items, left, middle, comparer);
+				Sort(items, middle + 1, right, comparer);
 				Merge(items, left, middle, right, comparer);
 			}
 		}
