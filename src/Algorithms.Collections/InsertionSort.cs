@@ -23,5 +23,36 @@ namespace Algorithms.Collections
 				list[insertIndex + 1] = currentItem;
 			}
 		}
+
+		// Ex 2.3-4
+		public static void SortRecursiveInPlace<T>(IList<T> list, IComparer<T> comparer)
+		{
+			SortRecursiveInPlace(list, list.Count - 1, comparer);
+		}
+
+		private static void SortRecursiveInPlace<T>(IList<T> list, int index, IComparer<T> comparer)
+		{
+			if (index <= 1)
+				return;
+
+			SortRecursiveInPlace(list, index - 1, comparer);
+
+			T value = list[index];
+			list.RemoveAt(index);
+
+			int insertionIndex = FindInsertionIndex(list, index, value, comparer);
+			list.Insert(insertionIndex, value);
+		}
+
+		private static int FindInsertionIndex<T>(IList<T> list, int startIndex, T value, IComparer<T> comparer)
+		{
+			for (int index = startIndex - 1; index > 0; index--)
+			{
+				if (comparer.Compare(list[index], value) <= 0)
+					return index;
+			}
+
+			return 0;
+		}
 	}
 }
