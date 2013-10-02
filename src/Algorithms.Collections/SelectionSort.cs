@@ -14,7 +14,7 @@ namespace Algorithms.Collections
 			for (int index = 0; index < list.Count - 1; index++)
 			{
 				int minIndex = IndexOfMinimum(list, index, comparer);
-				Swap(list, index, minIndex);
+				Utility.Swap(list, index, minIndex);
 			}
 		}
 
@@ -33,16 +33,6 @@ namespace Algorithms.Collections
 					minIndex = index;
 			}
 			return minIndex;
-		}
-
-		private static void Swap<T>(IList<T> items, int first, int second)
-		{
-			if (first == second)
-				return;
-
-			T temp = items[first];
-			items[first] = items[second];
-			items[second] = temp;
 		}
 	}
 }

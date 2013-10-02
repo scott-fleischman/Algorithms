@@ -41,6 +41,7 @@ namespace Algorithms.Collections.Tests
 		{
 			return new[]
 				{
+					new NamedSortAlgorithm<T>("BubbleSort.Sort", BubbleSort.Sort),
 					new NamedSortAlgorithm<T>("InsertionSort.Sort", InsertionSort.Sort),
 					new NamedSortAlgorithm<T>("InsertionSort.SortRecursive", InsertionSort.SortRecursive),
 					new NamedSortAlgorithm<T>("MergeSort.Sort", MergeSort.Sort),
