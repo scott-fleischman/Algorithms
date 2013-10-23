@@ -16,6 +16,15 @@ namespace Algorithms.Collections.Tests
 			Assert.AreEqual(testCase.Expected.Sum, result.Sum);
 		}
 
+		[TestCaseSource("GetTestCases_Int32")]
+		public void GetMaximumSublistBruteForce_Int32(TestCase<int> testCase)
+		{
+			var result = MaximumSublist.GetMaximumSublistBruteForce(testCase.Items, (x, y) => x + y, Comparer<int>.Default);
+			Assert.AreEqual(testCase.Expected.StartIndex, result.StartIndex);
+			Assert.AreEqual(testCase.Expected.EndIndex, result.EndIndex);
+			Assert.AreEqual(testCase.Expected.Sum, result.Sum);
+		}
+
 		public IEnumerable<TestCase<int>> GetTestCases_Int32()
 		{
 			return new[]
@@ -23,7 +32,9 @@ namespace Algorithms.Collections.Tests
 					TestCase.Create(new[] { 1 }, SublistSum.Create(0, 0, 1)),
 					TestCase.Create(new[] { 1, 2 }, SublistSum.Create(0, 1, 3)),
 					TestCase.Create(new[] { 1, -2 }, SublistSum.Create(0, 0, 1)),
+					TestCase.Create(new[] { 1, -2, 0 }, SublistSum.Create(0, 0, 1)),
 					TestCase.Create(new[] { 1, -4, 3, -4 }, SublistSum.Create(2, 2, 3)),
+					TestCase.Create(new[] { 1, -4, 3, -4, 1 }, SublistSum.Create(2, 2, 3)),
 					TestCase.Create(new[] { 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7 },
 						SublistSum.Create(7, 10, 18 + 20 + -7 + 12)),
 				};

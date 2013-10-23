@@ -36,6 +36,27 @@ namespace Algorithms.Collections
 				return cross;
 		}
 
+		// Ex 4.1-2
+		public static SublistSum<T> GetMaximumSublistBruteForce<T>(IList<T> list, Func<T, T, T> add, IComparer<T> comparer)
+		{
+			if (list.Count == 0)
+				throw new ArgumentException("list has no elements", "list");
+
+			SublistSum<T>? maxSum = null;
+			for (int leftIndex = 0; leftIndex < list.Count; leftIndex++)
+			{
+				T sum = default(T);
+				for (int rightIndex = leftIndex; rightIndex < list.Count; rightIndex++)
+				{
+					sum = add(sum, list[rightIndex]);
+					if (maxSum == null || comparer.Compare(sum, maxSum.Value.Sum) > 0)
+						maxSum = new SublistSum<T>(leftIndex, rightIndex, sum);
+				}
+			}
+
+			return maxSum.Value;
+		}
+
 		private static SublistSum<T> GetMaximumCrossingSublist<T>(IList<T> list, int startIndex, int middleIndex, int endIndex, Func<T, T, T> add, IComparer<T> comparer)
 		{
 			int leftIndex = middleIndex;
@@ -78,7 +99,7 @@ namespace Algorithms.Collections
 		}
 	}
 
-	public class SublistSum<T>
+	public struct SublistSum<T>
 	{
 		public SublistSum(int startIndex, int endIndex, T sum)
 		{
