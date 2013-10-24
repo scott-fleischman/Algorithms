@@ -57,6 +57,29 @@ namespace Algorithms.Collections
 			return maxSum.Value;
 		}
 
+		// Ex 4.1-5
+		public static SublistSum<T> GetMaximumSublistLinear<T>(IList<T> list, Func<T, T, T> add, IComparer<T> comparer)
+		{
+			if (list.Count == 0)
+				throw new ArgumentException("list has no elements", "list");
+
+			var currentMax = new SublistSum<T>(0, 0, list[0]);
+			var endMax = currentMax;
+
+			for (int index = 1; index < list.Count; index++)
+			{
+				T value = list[index];
+				T endSum = add(endMax.Sum, value);
+				endMax = comparer.Compare(endSum, value) < 0 ?
+					new SublistSum<T>(index, index, value) :
+					new SublistSum<T>(endMax.StartIndex, index, endSum);
+
+				currentMax = comparer.Compare(currentMax.Sum, endMax.Sum) < 0 ? endMax : currentMax;
+			}
+
+			return currentMax;
+		}
+
 		private static SublistSum<T> GetMaximumCrossingSublist<T>(IList<T> list, int startIndex, int middleIndex, int endIndex, Func<T, T, T> add, IComparer<T> comparer)
 		{
 			int leftIndex = middleIndex;
@@ -121,6 +144,11 @@ namespace Algorithms.Collections
 		public T Sum
 		{
 			get { return m_sum; }
+		}
+
+		public override string ToString()
+		{
+			return string.Format("{{Start:{0}, End:{1}, Sum:{2}}}", StartIndex, EndIndex, Sum);
 		}
 
 		readonly int m_startIndex;

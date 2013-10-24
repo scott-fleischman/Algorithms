@@ -11,18 +11,28 @@ namespace Algorithms.Collections.Tests
 		public void GetMaximumSublist_Int32(TestCase<int> testCase)
 		{
 			var result = MaximumSublist.GetMaximumSublist(testCase.Items, (x, y) => x + y);
-			Assert.AreEqual(testCase.Expected.StartIndex, result.StartIndex);
-			Assert.AreEqual(testCase.Expected.EndIndex, result.EndIndex);
-			Assert.AreEqual(testCase.Expected.Sum, result.Sum);
+			AssertAreEqual(testCase.Expected, result);
 		}
 
 		[TestCaseSource("GetTestCases_Int32")]
 		public void GetMaximumSublistBruteForce_Int32(TestCase<int> testCase)
 		{
 			var result = MaximumSublist.GetMaximumSublistBruteForce(testCase.Items, (x, y) => x + y, Comparer<int>.Default);
-			Assert.AreEqual(testCase.Expected.StartIndex, result.StartIndex);
-			Assert.AreEqual(testCase.Expected.EndIndex, result.EndIndex);
-			Assert.AreEqual(testCase.Expected.Sum, result.Sum);
+			AssertAreEqual(testCase.Expected, result);
+		}
+
+		[TestCaseSource("GetTestCases_Int32")]
+		public void GetMaximumSublistLinear_Int32(TestCase<int> testCase)
+		{
+			var result = MaximumSublist.GetMaximumSublistLinear(testCase.Items, (x, y) => x + y, Comparer<int>.Default);
+			AssertAreEqual(testCase.Expected, result);
+		}
+
+		private void AssertAreEqual<T>(SublistSum<T> expected, SublistSum<T> actual)
+		{
+			Assert.AreEqual(expected.StartIndex, actual.StartIndex);
+			Assert.AreEqual(expected.EndIndex, actual.EndIndex);
+			Assert.AreEqual(expected.Sum, actual.Sum);
 		}
 
 		public IEnumerable<TestCase<int>> GetTestCases_Int32()
@@ -64,6 +74,11 @@ namespace Algorithms.Collections.Tests
 			public SublistSum<T> Expected
 			{
 				get { return m_expected; }
+			}
+
+			public override string ToString()
+			{
+				return string.Format("{{Items:{0}, Expected:{1}}}", string.Join(",", Items.Select(x => x.ToString())), Expected);
 			}
 
 			readonly IList<T> m_items;
