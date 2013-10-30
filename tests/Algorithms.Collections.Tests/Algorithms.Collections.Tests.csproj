@@ -47,6 +47,7 @@
     <Compile Include="SortAlgorithmTests.cs" />
     <Compile Include="SortTestCase.cs" />
     <Compile Include="SortTestCases.cs" />
+    <Compile Include="SquareMatrixTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
