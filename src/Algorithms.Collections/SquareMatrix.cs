@@ -9,7 +9,6 @@ namespace Algorithms.Collections
 			ValidateAreEqualSquare(A, B);
 
 			int length = A.GetLength(0);
-
 			var C = new T[length,length];
 
 			for (int i = 0; i < length; i++)
@@ -23,6 +22,22 @@ namespace Algorithms.Collections
 			}
 
 			return C;
+		}
+
+		public static T[,] Add<T>(T[,] left, T[,] right, Func<T, T, T> add)
+		{
+			ValidateAreEqualSquare(left, right);
+
+			int length = left.GetLength(0);
+			var result = new T[length,length];
+
+			for (int row = 0; row < left.GetLength(0); row++)
+			{
+				for (int column = 0; column < left.GetLength(1); column++)
+					result[row, column] = add(left[row, column], right[row, column]);
+			}
+
+			return result;
 		}
 
 		private static void ValidateAreEqualSquare<T>(T[,] A, T[,] B)

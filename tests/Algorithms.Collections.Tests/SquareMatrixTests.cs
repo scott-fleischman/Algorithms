@@ -8,23 +8,67 @@ namespace Algorithms.Collections.Tests
 	[TestFixture]
 	public class SquareMatrixTests
 	{
-		[TestCaseSource("GetTestCases")]
+		[TestCaseSource("GetProductTestCases")]
 		public void Multiply(TestCase testCase)
 		{
 			int[,] result = SquareMatrix.Multiply(testCase.Left, testCase.Right, (x, y) => x + y, (x, y) => x * y);
-			CollectionAssert.AreEqual(result, testCase.Product);
+			CollectionAssert.AreEqual(result, testCase.Result);
 		}
 
-		public IEnumerable<TestCase> GetTestCases()
+		[TestCaseSource("GetAdditionTestCases")]
+		public void Add(TestCase testCase)
+		{
+			int[,] result = SquareMatrix.Add(testCase.Left, testCase.Right, (x, y) => x + y);
+			CollectionAssert.AreEqual(result, testCase.Result);
+		}
+
+		public IEnumerable<TestCase> GetAdditionTestCases()
 		{
 			return new[]
 				{
 					new TestCase
 						{
+							Left = new[,] {{2}},
+							Right = new[,] {{3}},
+							Result = new[,] {{5}},
+						},
+					new TestCase
+						{
 							Left = new[,] {{1, 2}, {3, 4}},
 							Right = new[,] {{4, 3}, {2, 1}},
-							Product = new[,] {{8, 5}, {20, 13}},
+							Result = new[,] {{5, 5}, {5, 5}},
 						},
+					new TestCase
+					{
+						Left = new[,] {{1, 2}, {7, 5}},
+						Right = new[,] {{6, 8}, {4, 2}},
+						Result = new[,] {{7, 10}, {11, 7}}
+					}
+				};
+		}
+
+		public IEnumerable<TestCase> GetProductTestCases()
+		{
+			return new[]
+				{
+					new TestCase
+						{
+							Left = new[,] {{2}},
+							Right = new[,] {{3}},
+							Result = new[,] {{6}},
+						},
+					new TestCase
+						{
+							Left = new[,] {{1, 2}, {3, 4}},
+							Right = new[,] {{4, 3}, {2, 1}},
+							Result = new[,] {{8, 5}, {20, 13}},
+						},
+					new TestCase
+					{
+						Left = new[,] {{1, 2}, {7, 5}},
+						Right = new[,] {{6, 8}, {4, 2}},
+						Result = new[,] {{2 * 7, 2 * 6}, {2 * 31, 2 * 33}}
+					}
 				};
 		}
 
@@ -32,11 +76,11 @@ namespace Algorithms.Collections.Tests
 		{
 			public int[,] Left { get; set; }
 			public int[,] Right { get; set; }
-			public int[,] Product { get; set; }
+			public int[,] Result { get; set; }
 
 			public override string ToString()
 			{
-				return string.Format("{{Left={0}, Right={1}, Product={2}}}", RenderMatrix(Left), RenderMatrix(Right), RenderMatrix(Product));
+				return string.Format("{{Left={0}, Right={1}, Result={2}}}", RenderMatrix(Left), RenderMatrix(Right), RenderMatrix(Result));
 			}
 
 			private static string RenderMatrix(int[,] matrix)
