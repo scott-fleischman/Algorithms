@@ -15,6 +15,13 @@ namespace Algorithms.Collections.Tests
 			CollectionAssert.AreEqual(result, testCase.Result);
 		}
 
+		[TestCaseSource("GetProductTestCases")]
+		public void MultiplyRecursive(TestCase testCase)
+		{
+			int[,] result = SquareMatrix.MultiplyRecursive(testCase.Left, testCase.Right, (x, y) => x + y, (x, y) => x * y);
+			CollectionAssert.AreEqual(result, testCase.Result);
+		}
+
 		[TestCaseSource("GetAdditionTestCases")]
 		public void Add(TestCase testCase)
 		{
