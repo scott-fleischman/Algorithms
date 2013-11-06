@@ -40,6 +40,18 @@ namespace Algorithms.Collections
 			return result;
 		}
 
+		private static void Copy<T>(T[,] source, int sourceRow, int sourceColumn, T[,] target, int targetRow, int targetColumn, int rowLength, int columnLength)
+		{
+			for (int rowOffset = 0; rowOffset < rowLength; rowOffset++)
+			{
+				for (int columnOffset = 0; columnOffset < columnLength; columnOffset++)
+				{
+					target[targetRow + rowOffset, targetColumn + columnOffset] =
+						source[sourceRow + rowOffset, sourceColumn + columnOffset];
+				}
+			}
+		}
+
 		private static void ValidateAreEqualSquare<T>(T[,] A, T[,] B)
 		{
 			if (!IsSquare(A))
