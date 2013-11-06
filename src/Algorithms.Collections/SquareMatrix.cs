@@ -9,7 +9,7 @@ namespace Algorithms.Collections
 			ValidateAreEqualSquare(A, B);
 
 			int length = A.GetLength(0);
-			var C = new T[length,length];
+			var C = new T[length, length];
 
 			for (int i = 0; i < length; i++)
 			{
@@ -29,7 +29,7 @@ namespace Algorithms.Collections
 			ValidateAreEqualSquare(left, right);
 
 			int length = left.GetLength(0);
-			var result = new T[length,length];
+			var result = new T[length, length];
 
 			for (int row = 0; row < left.GetLength(0); row++)
 			{
