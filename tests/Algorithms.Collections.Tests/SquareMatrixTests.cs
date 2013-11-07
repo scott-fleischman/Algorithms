@@ -22,10 +22,17 @@ namespace Algorithms.Collections.Tests
 			CollectionAssert.AreEqual(result, testCase.Result);
 		}
 
+		[TestCaseSource("GetProductTestCases")]
+		public void MultiplyStrassen(TestCase testCase)
+		{
+			int[,] result = SquareMatrix.MultiplyStrassen(testCase.Left, testCase.Right, (x, y) => x + y, (x, y) => x - y, (x, y) => x * y);
+			CollectionAssert.AreEqual(result, testCase.Result);
+		}
+
 		[TestCaseSource("GetAdditionTestCases")]
 		public void Add(TestCase testCase)
 		{
-			int[,] result = SquareMatrix.Add(testCase.Left, testCase.Right, (x, y) => x + y);
+			int[,] result = SquareMatrix.Accumulate(testCase.Left, testCase.Right, (x, y) => x + y);
 			CollectionAssert.AreEqual(result, testCase.Result);
 		}
 

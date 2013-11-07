@@ -4,6 +4,54 @@ namespace Algorithms.Collections
 {
 	public static class SquareMatrix
 	{
+		public static T[,] MultiplyStrassen<T>(T[,] A, T[,] B, Func<T, T, T> add, Func<T, T, T> subtract, Func<T, T, T> multiply)
+		{
+			ValidateAreEqualSquare(A, B);
+			int length = A.GetLength(0);
+
+			if (length == 1)
+				return new[,] { { multiply(A[0, 0], B[0, 0]) } };
+
+			var partitionedA = Partition(A);
+			var partitionedB = Partition(B);
+
+			var S1 = Accumulate(partitionedB.TopRight, partitionedB.BottomRight, subtract);
+			var S2 = Accumulate(partitionedA.TopLeft, partitionedA.TopRight, add);
+			var S3 = Accumulate(partitionedA.BottomLeft, partitionedA.BottomRight, add);
+			var S4 = Accumulate(partitionedB.BottomLeft, partitionedB.TopLeft, subtract);
+			var S5 = Accumulate(partitionedA.TopLeft, partitionedA.BottomRight, add);
+			var S6 = Accumulate(partitionedB.TopLeft, partitionedB.BottomRight, add);
+			var S7 = Accumulate(partitionedA.TopRight, partitionedA.BottomRight, subtract);
+			var S8 = Accumulate(partitionedB.BottomLeft, partitionedB.BottomRight, add);
+			var S9 = Accumulate(partitionedA.TopLeft, partitionedA.BottomLeft, subtract);
+			var S10 = Accumulate(partitionedB.TopLeft, partitionedB.TopRight, add);
+
+			var P1 = MultiplyStrassen(partitionedA.TopLeft, S1, add, subtract, multiply);
+			var P2 = MultiplyStrassen(S2, partitionedB.BottomRight, add, subtract, multiply);
+			var P3 = MultiplyStrassen(S3, partitionedB.TopLeft, add, subtract, multiply);
+			var P4 = MultiplyStrassen(partitionedA.BottomRight, S4, add, subtract, multiply);
+			var P5 = MultiplyStrassen(S5, S6, add, subtract, multiply);
+			var P6 = MultiplyStrassen(S7, S8, add, subtract, multiply);
+			var P7 = MultiplyStrassen(S9, S10, add, subtract, multiply);
+
+			var C11 = 
+				Accumulate(
+				Accumulate(
+				Accumulate(P5, P4, add),
+					P2, subtract),
+					P6, add);
+			var C12 = Accumulate(P1, P2, add);
+			var C21 = Accumulate(P3, P4, add);
+			var C22 =
+				Accumulate(
+				Accumulate(
+				Accumulate(P5, P1, add),
+					P3, subtract),
+					P7, subtract);
+
+			return Combine(new PartitionedMatrix<T>(C11, C12, C21, C22));
+		}
+
 		public static T[,] Multiply<T>(T[,] A, T[,] B, Func<T, T, T> add, Func<T, T, T> multiply)
 		{
 			ValidateAreEqualSquare(A, B);
@@ -24,6 +72,20 @@ namespace Algorithms.Collections
 			return C;
 		}
 
+		public static T[,] Scale<T>(T[,] matrix, T scale, Func<T, T, T> multiply)
+		{
+			int rowLength = matrix.GetLength(0);
+			int columnLength = matrix.GetLength(1);
+
+			var result = new T[rowLength, columnLength];
+			for (int row = 0; row < rowLength; row++)
+			{
+				for (int column = 0; column < columnLength; column++)
+					result[row, column] = multiply(scale, matrix[row, column]);
+			}
+			return result;
+		}
+
 		public static T[,] MultiplyRecursive<T>(T[,] A, T[,] B, Func<T, T, T> add, Func<T, T, T> multiply)
 		{
 			ValidateAreEqualSquare(A, B);
@@ -35,19 +97,19 @@ namespace Algorithms.Collections
 			var partitionedA = Partition(A);
 			var partitionedB = Partition(B);
 
-			var resultTopLeft = Add(
+			var resultTopLeft = Accumulate(
 				MultiplyRecursive(partitionedA.TopLeft, partitionedB.TopLeft, add, multiply),
 				MultiplyRecursive(partitionedA.TopRight, partitionedB.BottomLeft, add, multiply),
 				add);
-			var resultTopRight = Add(
+			var resultTopRight = Accumulate(
 				MultiplyRecursive(partitionedA.TopLeft, partitionedB.TopRight, add, multiply),
 				MultiplyRecursive(partitionedA.TopRight, partitionedB.BottomRight, add, multiply),
 				add);
-			var resultBottomLeft = Add(
+			var resultBottomLeft = Accumulate(
 				MultiplyRecursive(partitionedA.BottomLeft, partitionedB.TopLeft, add, multiply),
 				MultiplyRecursive(partitionedA.BottomRight, partitionedB.BottomLeft, add, multiply),
 				add);
-			var resultBottomRight = Add(
+			var resultBottomRight = Accumulate(
 				MultiplyRecursive(partitionedA.BottomLeft, partitionedB.TopRight, add, multiply),
 				MultiplyRecursive(partitionedA.BottomRight, partitionedB.BottomRight, add, multiply),
 				add);
@@ -55,7 +117,7 @@ namespace Algorithms.Collections
 			return Combine(new PartitionedMatrix<T>(resultTopLeft, resultTopRight, resultBottomLeft, resultBottomRight));
 		}
 
-		public static T[,] Add<T>(T[,] left, T[,] right, Func<T, T, T> add)
+		public static T[,] Accumulate<T>(T[,] left, T[,] right, Func<T, T, T> accumulator)
 		{
 			ValidateAreEqualSquare(left, right);
 
@@ -65,7 +127,7 @@ namespace Algorithms.Collections
 			for (int row = 0; row < left.GetLength(0); row++)
 			{
 				for (int column = 0; column < left.GetLength(1); column++)
-					result[row, column] = add(left[row, column], right[row, column]);
+					result[row, column] = accumulator(left[row, column], right[row, column]);
 			}
 
 			return result;
